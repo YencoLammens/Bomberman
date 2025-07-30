@@ -42,9 +42,10 @@
 #include "FireballCommand.h"
 #include <format>
 #include "basic_ColliderSystem.h"
-#include "SpriteRenderStateComponent.h"
 #include "Camera.h"
 #include "CameraFollowComponent.h"
+#include "SpriteAnimatorComponent.h"
+#include "AnimationClip.h"
 
 void load()
 {
@@ -137,10 +138,18 @@ void load()
 	go->AddComponent(std::move(deathAnimationComponent));
 	auto fireballLauncherComponent = std::make_unique<dae::FireballLauncherComponent>(go.get());
 	go->AddComponent(std::move(fireballLauncherComponent));
-	auto spriteStateComponent = std::make_unique<dae::SpriteRenderStateComponent>(go.get());
-	go->AddComponent(std::move(spriteStateComponent));
 	auto cameraFollowComponent = std::make_unique<dae::CameraFollowComponent>(go.get());
 	go->AddComponent(std::move(cameraFollowComponent));
+	auto spriteAnimatorComponent = std::make_unique<dae::SpriteAnimatorComponent>(go.get(), dae::ResourceManager::GetInstance().LoadTexture("BombermanSprites.png").get());
+	spriteAnimatorComponent.get()->SetAnimation("Idle", dae::AnimationClip{
+		.frames = { SDL_Rect{ 0, 0, 16, 16 } , SDL_Rect{ 16, 0, 16, 16 }, SDL_Rect{ 32, 0, 16, 16 }},
+		.frameDuration = 0.1f,
+		.loop = true
+		});
+	go->AddComponent(std::move(spriteAnimatorComponent));
+	
+
+
 	/*auto gridMovementComponent = std::make_unique<dae::GridMovementComponent>(go.get(), 50.0f, 200.0f, tileMap.get());
 	go->AddComponent(std::move(gridMovementComponent));*/
 	//auto rotatorComponent = std::make_unique<dae::RotatorComponent>(go.get(), glm::vec3(200, 200, 0), 2.0f);
