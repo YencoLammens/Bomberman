@@ -3,6 +3,8 @@
 #include "GameObject.h"
 #include "SpriteRenderStateComponent.h"
 
+class SpriteAnimatorComponent;
+
 dae::RenderComponent::RenderComponent(GameObject* owner)
 	: BaseComponent(owner), m_position{0, 0, 0}
 {
@@ -21,31 +23,80 @@ void dae::RenderComponent::FixedUpdate(float)
 {
 }
 
+//Orignal method
+//void dae::RenderComponent::Render() const
+//{
+//	
+//
+//	if (m_texture && m_enabled)
+//	{
+//		auto* transform = GetOwner()->GetTransform();
+//		const auto pos = transform->GetWorldPosition();
+//
+//		auto* spriteState = GetOwner()->GetComponent<SpriteRenderStateComponent>();
+//		if (spriteState)
+//		{
+//			Renderer::GetInstance().RenderTexture(
+//				*m_texture,
+//				pos.x, pos.y,
+//				spriteState->GetRotation(),
+//				spriteState->GetFlipX()
+//			);
+//		}
+//		else
+//		{
+//			Renderer::GetInstance().RenderTexture(*m_texture, pos.x, pos.y);
+//		}
+//	}
+//}
+
+
+////Animated method
+//void dae::RenderComponent::Render() const
+//{
+//	if (m_texture && m_enabled)
+//	{
+//		auto* transform = GetOwner()->GetTransform();
+//		const auto pos = transform->GetWorldPosition();
+//
+//		// Build destination rect using the position and texture size
+//		SDL_Rect dstRect{};
+//		dstRect.x = static_cast<int>(pos.x);
+//		dstRect.y = static_cast<int>(pos.y);
+//		dstRect.w = static_cast<int>(m_sourceRect.w);
+//		dstRect.h = static_cast<int>(m_sourceRect.h);
+//
+//		Renderer::GetInstance().RenderTexture(*m_texture, m_sourceRect, dstRect);
+//	}
+//}
+
+
 void dae::RenderComponent::Render() const
 {
-	
+	if (!m_texture || !m_enabled) return;
 
-	if (m_texture && m_enabled)
+	auto* transform = GetOwner()->GetTransform();
+	const auto pos = transform->GetWorldPosition();
+
+	if (m_useSourceRect)
 	{
-		auto* transform = GetOwner()->GetTransform();
-		const auto pos = transform->GetWorldPosition();
+		// Use source rect for animation
+		SDL_Rect dstRect{};
+		dstRect.x = static_cast<int>(pos.x);
+		dstRect.y = static_cast<int>(pos.y);
+		dstRect.w = m_sourceRect.w;
+		dstRect.h = m_sourceRect.h;
 
-		auto* spriteState = GetOwner()->GetComponent<SpriteRenderStateComponent>();
-		if (spriteState)
-		{
-			Renderer::GetInstance().RenderTexture(
-				*m_texture,
-				pos.x, pos.y,
-				spriteState->GetRotation(),
-				spriteState->GetFlipX()
-			);
-		}
-		else
-		{
-			Renderer::GetInstance().RenderTexture(*m_texture, pos.x, pos.y);
-		}
+		Renderer::GetInstance().RenderTexture(*m_texture, m_sourceRect, dstRect);
+	}
+	else
+	{
+		// Default static rendering
+		Renderer::GetInstance().RenderTexture(*m_texture, pos.x, pos.y);
+		
 	}
 }
+
 
 void dae::RenderComponent::SetTexture(const std::shared_ptr<Texture2D>& texture)
 {

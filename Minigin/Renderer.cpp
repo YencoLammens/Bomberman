@@ -126,6 +126,17 @@ void dae::Renderer::RenderTexture(const Texture2D& texture, float x, float y, fl
 	);
 }
 
+void dae::Renderer::RenderTexture(const Texture2D& texture, const SDL_Rect& srcRect, const SDL_Rect& dstRect) const
+{
+	auto camOffset = Camera::GetInstance().GetPosition();
+
+	SDL_Rect finalDst = dstRect;
+	finalDst.x -= static_cast<int>(camOffset.x);
+	finalDst.y -= static_cast<int>(camOffset.y);
+
+	SDL_RenderCopy(m_renderer, texture.GetSDLTexture(), &srcRect, &finalDst);
+}
+
 SDL_Renderer* dae::Renderer::GetSDLRenderer() const { return m_renderer; }
 
 void dae::Renderer::AddRenderComponent(RenderComponent* renderComponent)

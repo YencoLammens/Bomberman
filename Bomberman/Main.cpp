@@ -122,7 +122,7 @@ void load()
 	go = std::make_unique<dae::GameObject>();
 	//Bomberman
 	renderComponent = std::make_unique<dae::RenderComponent>(go.get());
-	renderComponent->SetTexture(dae::ResourceManager::GetInstance().LoadTexture("Digger.png"));
+	renderComponent->SetTexture(dae::ResourceManager::GetInstance().LoadTexture("BombermanSprites.png"));
 	go->AddComponent(std::move(renderComponent));
 	go->GetTransform()->SetLocalPosition(96, 128, 0);
 	auto moveComponent = std::make_unique<dae::MoveComponent>(go.get());

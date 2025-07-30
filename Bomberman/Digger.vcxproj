@@ -85,6 +85,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AnimationClip.cpp" />
     <ClCompile Include="CameraFollowComponent.cpp" />
     <ClCompile Include="DamageCommand.cpp" />
     <ClCompile Include="DeathAnimationComponent.cpp" />
@@ -101,9 +102,12 @@
     <ClCompile Include="MoveComponent.cpp" />
     <ClCompile Include="ScoreComponent.cpp" />
     <ClCompile Include="ScoreDisplay.cpp" />
+    <ClCompile Include="SpriteAnimatorComponent.cpp" />
     <ClCompile Include="TextComponent.cpp" />
+    <ClCompile Include="TileMap.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AnimationClip.h" />
     <ClInclude Include="CameraFollowComponent.h" />
     <ClInclude Include="DamageCommand.h" />
     <ClInclude Include="DeathAnimationComponent.h" />
@@ -120,7 +124,9 @@
     <ClInclude Include="MoveComponent.h" />
     <ClInclude Include="ScoreComponent.h" />
     <ClInclude Include="ScoreDisplay.h" />
+    <ClInclude Include="SpriteAnimatorComponent.h" />
     <ClInclude Include="TextComponent.h" />
+    <ClInclude Include="TileMap.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
