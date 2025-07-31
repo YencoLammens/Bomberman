@@ -144,7 +144,7 @@ void load()
 	auto cameraFollowComponent = std::make_unique<dae::CameraFollowComponent>(go.get());
 	go->AddComponent(std::move(cameraFollowComponent));
 	auto spriteAnimatorComponent = std::make_unique<dae::SpriteAnimatorComponent>(go.get(), dae::ResourceManager::GetInstance().LoadTexture("BombermanSprites.png").get());
-	spriteAnimatorComponent.get()->RegisterAnimation("Idle", dae::AnimationClip{
+	spriteAnimatorComponent.get()->RegisterAnimation("WalkLeft", dae::AnimationClip{
 		.frames = { SDL_Rect{ 0, 0, 16, 16 } , SDL_Rect{ 16, 0, 16, 16 }, SDL_Rect{ 32, 0, 16, 16 }},
 		.frameDuration = 0.1f,
 		.loop = true
@@ -153,6 +153,21 @@ void load()
 		.frames = { SDL_Rect{ 48, 0, 16, 16 }, SDL_Rect{ 64, 0, 16, 16 }, SDL_Rect{ 80, 0, 16, 16 }},
 		.frameDuration = 0.1f,
 		.loop = true
+		});
+	spriteAnimatorComponent.get()->RegisterAnimation("WalkRight", dae::AnimationClip{
+		.frames = { SDL_Rect{ 0, 16, 16, 16 }, SDL_Rect{ 16, 16, 16, 16 }, SDL_Rect{ 32, 16, 16, 16 }},
+		.frameDuration = 0.1f,
+		.loop = true
+		});
+	spriteAnimatorComponent.get()->RegisterAnimation("WalkUp", dae::AnimationClip{
+		.frames = { SDL_Rect{ 48, 16, 16, 16 }, SDL_Rect{ 64, 16, 16, 16 }, SDL_Rect{ 80, 16, 16, 16 }},
+		.frameDuration = 0.1f,
+		.loop = true
+		});
+	spriteAnimatorComponent.get()->RegisterAnimation("Dying", dae::AnimationClip{
+		.frames = { SDL_Rect{ 0, 32, 16, 16 }, SDL_Rect{ 16, 32, 16, 16 }, SDL_Rect{ 32, 32, 16, 16 }, SDL_Rect{ 48, 32, 16, 16 }, SDL_Rect{ 64, 32, 16, 16 }, SDL_Rect{ 80, 32, 16, 16 }, SDL_Rect{ 96, 32, 16, 16 }},
+		.frameDuration = 0.1f,
+		.loop = false
 		});
 	go->AddComponent(std::move(spriteAnimatorComponent));
 	auto fsm = std::make_unique<dae::FSMComponent<dae::BombermanState, dae::IBombermanState>>(go.get());
@@ -169,7 +184,7 @@ void load()
 	
 	fsm->AddState(dae::BombermanState::Dying, std::make_unique<dae::DyingState>());
 
-	fsm->ChangeState(dae::BombermanState::IdleDown);
+	fsm->ChangeState(dae::BombermanState::Dying);
 
 	go->AddComponent(std::move(fsm));
 	
