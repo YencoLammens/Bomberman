@@ -164,9 +164,31 @@ void load()
 		.frameDuration = 0.1f,
 		.loop = true
 		});
+	//Fix this later, testing purposes to test the states, fix logic in movementComponent
+	spriteAnimatorComponent.get()->RegisterAnimation("IdleLeft", dae::AnimationClip{
+		.frames = { SDL_Rect{ 0, 0, 16, 16 }},
+		.frameDuration = 1,
+		.loop = false
+		});
+	spriteAnimatorComponent.get()->RegisterAnimation("IdleDown", dae::AnimationClip{
+		.frames = { SDL_Rect{ 48, 0, 16, 16 }},
+		.frameDuration = 1,
+		.loop = false
+		});
+	spriteAnimatorComponent.get()->RegisterAnimation("IdleRight", dae::AnimationClip{
+		.frames = { SDL_Rect{ 0, 16, 16, 16 }},
+		.frameDuration = 1,
+		.loop = true
+		});
+	spriteAnimatorComponent.get()->RegisterAnimation("IdleUp", dae::AnimationClip{
+		.frames = { SDL_Rect{ 48, 16, 16, 16 }, SDL_Rect{ 64, 16, 16, 16 }, SDL_Rect{ 80, 16, 16, 16 }},
+		.frameDuration = 1,
+		.loop = true
+		});
+
 	spriteAnimatorComponent.get()->RegisterAnimation("Dying", dae::AnimationClip{
 		.frames = { SDL_Rect{ 0, 32, 16, 16 }, SDL_Rect{ 16, 32, 16, 16 }, SDL_Rect{ 32, 32, 16, 16 }, SDL_Rect{ 48, 32, 16, 16 }, SDL_Rect{ 64, 32, 16, 16 }, SDL_Rect{ 80, 32, 16, 16 }, SDL_Rect{ 96, 32, 16, 16 }},
-		.frameDuration = 0.1f,
+		.frameDuration = 0.2f,
 		.loop = false
 		});
 	go->AddComponent(std::move(spriteAnimatorComponent));
@@ -184,7 +206,7 @@ void load()
 	
 	fsm->AddState(dae::BombermanState::Dying, std::make_unique<dae::DyingState>());
 
-	fsm->ChangeState(dae::BombermanState::Dying);
+	//fsm->ChangeState(dae::BombermanState::Dying);
 
 	go->AddComponent(std::move(fsm));
 	

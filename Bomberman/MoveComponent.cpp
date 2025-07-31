@@ -1,12 +1,13 @@
-#include "MoveComponent.h"
+ï»¿#include "MoveComponent.h"
 #include "GameObject.h"
 #include "Transform.h"
 #include <cmath>
 #include "FSMComponent.h"
 #include "BombermanState.h"
 #include "IBombermanState.h"
+
 dae::MoveComponent::MoveComponent(GameObject* owner, float speed)
-	: BaseComponent(owner), m_speed(speed), m_direction({1,0,0}), m_pendingDirection(0.f), m_previousDirection(m_direction)
+	: BaseComponent(owner), m_speed(speed), m_direction({ 1, 0, 0 }), m_pendingDirection(0.f), m_previousDirection(m_direction)
 {
 }
 
@@ -24,32 +25,42 @@ void dae::MoveComponent::Update(float deltaTime)
 		currentPosition.y = std::round(currentPosition.y / m_tileSize) * m_tileSize;
 		transform->SetLocalPosition(currentPosition);
 
-		// If no direction, stop
 		if (m_pendingDirection == glm::vec3{ 0.f })
 		{
 			m_direction = glm::vec3{ 0.f };
+			// Set idle state based on previous movement direction
+			auto* fsm = GetOwner()->GetComponent<FSMComponent<BombermanState, IBombermanState>>();
+			if (fsm)
+			{
+				if (m_previousDirection.x < 0.f)
+					fsm->ChangeState(BombermanState::IdleLeft);
+				else if (m_previousDirection.x > 0.f)
+					fsm->ChangeState(BombermanState::IdleRight);
+				else if (m_previousDirection.y < 0.f)
+					fsm->ChangeState(BombermanState::IdleUp);
+				else if (m_previousDirection.y > 0.f)
+					fsm->ChangeState(BombermanState::IdleDown);
+			}
 			return;
 		}
 
-		// Calculate tentative target
 		glm::vec3 target = currentPosition + m_pendingDirection * m_tileSize;
 
-		// Check bounds
 		if (target.x < m_movementBounds.x || target.x > m_movementBounds.x + m_movementBounds.width - m_tileSize ||
 			target.y < m_movementBounds.y || target.y > m_movementBounds.y + m_movementBounds.height - m_tileSize)
 		{
-			// Outside bounds — cancel movement
 			m_pendingDirection = glm::vec3{ 0.f };
 			m_direction = glm::vec3{ 0.f };
 			return;
 		}
+
+		m_previousDirection = m_pendingDirection;
 
 		m_direction = m_pendingDirection;
 		m_targetPosition = target;
 		m_isMoving = true;
 	}
 
-	// Move toward target
 	glm::vec3 directionToTarget = glm::normalize(m_targetPosition - currentPosition);
 	glm::vec3 velocity = directionToTarget * m_speed * deltaTime;
 
@@ -67,33 +78,21 @@ void dae::MoveComponent::Update(float deltaTime)
 void dae::MoveComponent::SetDirection(const glm::vec3& direction)
 {
 	m_pendingDirection = direction;
-	m_previousDirection = m_direction; // Store previous direction for potential use
 
-
-	if (m_canMove)
+	if (!m_isMoving && m_canMove && direction != glm::vec3{ 0.f })
 	{
-		if (direction.x < 0.f && !m_isMoving)
-		{
-			GetOwner()->GetComponent<FSMComponent<BombermanState, IBombermanState>>()->ChangeState(BombermanState::WalkLeft);
-		}
-		else if (direction.x > 0.f && !m_isMoving)
-		{
-			GetOwner()->GetComponent<FSMComponent<BombermanState, IBombermanState>>()->ChangeState(BombermanState::WalkRight);
-		}
-		else if (direction.y < 0.f && !m_isMoving)
-		{
-			GetOwner()->GetComponent<FSMComponent<BombermanState, IBombermanState>>()->ChangeState(BombermanState::WalkUp);
-		}
-		else if (direction.y > 0.f && !m_isMoving)
-		{
-			GetOwner()->GetComponent<FSMComponent<BombermanState, IBombermanState>>()->ChangeState(BombermanState::WalkDown);
-		}
-	}
-	else
-	{
+		auto* fsm = GetOwner()->GetComponent<FSMComponent<BombermanState, IBombermanState>>();
+		if (!fsm) return;
 
+		if (direction.x < 0.f)
+			fsm->ChangeState(BombermanState::WalkLeft);
+		else if (direction.x > 0.f)
+			fsm->ChangeState(BombermanState::WalkRight);
+		else if (direction.y < 0.f)
+			fsm->ChangeState(BombermanState::WalkUp);
+		else if (direction.y > 0.f)
+			fsm->ChangeState(BombermanState::WalkDown);
 	}
-		
 }
 
 void dae::MoveComponent::DisableMovement()
@@ -105,18 +104,3 @@ void dae::MoveComponent::EnableMovement()
 {
 	m_canMove = true;
 }
-
-
-
-//void dae::MoveComponent::SetDirection(const glm::vec3& direction)
-//{
-//	// Prevent diagonals
-//	if ((direction.x != 0.f && direction.y != 0.f) || direction.z != 0.f)
-//		return;
-//
-//	m_pendingDirection = direction;
-//
-//	// stop immediately if direction is zero
-//	if (direction == glm::vec3{ 0.f })
-//		m_direction = glm::vec3{ 0.f };
-//}

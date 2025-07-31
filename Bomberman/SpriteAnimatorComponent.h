@@ -21,6 +21,7 @@ namespace dae
 		void RegisterAnimation(const std::string& name, const AnimationClip& clip);
 		void Play(const std::string& name);
 
+
 	private:
 		void UpdateSprite();
 

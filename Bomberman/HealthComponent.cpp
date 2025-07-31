@@ -4,6 +4,7 @@
 #include "GameObject.h"
 #include "FireballLauncherComponent.h"
 #include "ServiceLocator.h"
+#include "FSMComponent.h"
 dae::HealthComponent::HealthComponent(GameObject* owner)
 	:BaseComponent(owner)
 {
