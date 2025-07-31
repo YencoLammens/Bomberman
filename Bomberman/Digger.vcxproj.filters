@@ -75,6 +75,9 @@
     <ClCompile Include="AnimationClip.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="IBombermanState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HealthComponent.h">
@@ -135,6 +138,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="AnimationClip.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IBombermanState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BombermanState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

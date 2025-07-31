@@ -46,6 +46,9 @@
 #include "CameraFollowComponent.h"
 #include "SpriteAnimatorComponent.h"
 #include "AnimationClip.h"
+#include "IBombermanState.h"
+#include "FSMComponent.h"
+#include "BombermanState.h"
 
 void load()
 {
@@ -141,12 +144,25 @@ void load()
 	auto cameraFollowComponent = std::make_unique<dae::CameraFollowComponent>(go.get());
 	go->AddComponent(std::move(cameraFollowComponent));
 	auto spriteAnimatorComponent = std::make_unique<dae::SpriteAnimatorComponent>(go.get(), dae::ResourceManager::GetInstance().LoadTexture("BombermanSprites.png").get());
-	spriteAnimatorComponent.get()->SetAnimation("Idle", dae::AnimationClip{
+	spriteAnimatorComponent.get()->RegisterAnimation("Idle", dae::AnimationClip{
 		.frames = { SDL_Rect{ 0, 0, 16, 16 } , SDL_Rect{ 16, 0, 16, 16 }, SDL_Rect{ 32, 0, 16, 16 }},
 		.frameDuration = 0.1f,
 		.loop = true
 		});
+	spriteAnimatorComponent.get()->RegisterAnimation("WalkDown", dae::AnimationClip{
+		.frames = { SDL_Rect{ 48, 0, 16, 16 }, SDL_Rect{ 64, 0, 16, 16 }, SDL_Rect{ 80, 0, 16, 16 }},
+		.frameDuration = 0.1f,
+		.loop = true
+		});
 	go->AddComponent(std::move(spriteAnimatorComponent));
+	auto fsm = std::make_unique<dae::FSMComponent<dae::BombermanState, dae::IBombermanState>>(go.get());
+
+	fsm->AddState(dae::BombermanState::IdleDown, std::make_unique<dae::IdleDownState>());
+	//fsm->AddState(dae::BombermanState::WalkRight, std::make_unique<dae::state>());
+
+	fsm->ChangeState(dae::BombermanState::IdleDown);
+
+	go->AddComponent(std::move(fsm));
 	
 
 
