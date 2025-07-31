@@ -24,5 +24,78 @@ namespace dae
         void HandleEvent(dae::GameObject* owner) override;
     };
 
+    class IdleUpState : public dae::IBombermanState
+    {
+    public:
+        void Enter(dae::GameObject& owner) override;
+        void Exit(dae::GameObject& owner) override;
+        void Update(dae::GameObject* owner, float deltaTime) override;
+        void HandleInput(dae::GameObject* owner) override;
+        void HandleEvent(dae::GameObject* owner) override;
+    };
+    class IdleRightState : public dae::IBombermanState
+    {
+    public:
+        void Enter(dae::GameObject& owner) override;
+        void Exit(dae::GameObject& owner) override;
+        void Update(dae::GameObject* owner, float deltaTime) override;
+        void HandleInput(dae::GameObject* owner) override;
+        void HandleEvent(dae::GameObject* owner) override;
+    };
+    class IdleLeftState : public dae::IBombermanState
+    {
+    public:
+        void Enter(dae::GameObject& owner) override;
+        void Exit(dae::GameObject& owner) override;
+        void Update(dae::GameObject* owner, float deltaTime) override;
+        void HandleInput(dae::GameObject* owner) override;
+        void HandleEvent(dae::GameObject* owner) override;
+    };
+    class WalkingDownState : public dae::IBombermanState
+    {
+    public:
+        void Enter(dae::GameObject& owner) override;
+        void Exit(dae::GameObject& owner) override;
+        void Update(dae::GameObject* owner, float deltaTime) override;
+        void HandleInput(dae::GameObject* owner) override;
+        void HandleEvent(dae::GameObject* owner) override;
+    };
+    class WalkingUpState : public dae::IBombermanState
+    {
+    public:
+        void Enter(dae::GameObject& owner) override;
+        void Exit(dae::GameObject& owner) override;
+        void Update(dae::GameObject* owner, float deltaTime) override;
+        void HandleInput(dae::GameObject* owner) override;
+        void HandleEvent(dae::GameObject* owner) override;
+    };
+    class WalkingRightState : public dae::IBombermanState
+    {
+    public:
+        void Enter(dae::GameObject& owner) override;
+        void Exit(dae::GameObject& owner) override;
+        void Update(dae::GameObject* owner, float deltaTime) override;
+        void HandleInput(dae::GameObject* owner) override;
+        void HandleEvent(dae::GameObject* owner) override;
+    };
+    class WalkingLeftState : public dae::IBombermanState
+    {
+    public:
+        void Enter(dae::GameObject& owner) override;
+        void Exit(dae::GameObject& owner) override;
+        void Update(dae::GameObject* owner, float deltaTime) override;
+        void HandleInput(dae::GameObject* owner) override;
+        void HandleEvent(dae::GameObject* owner) override;
+    };
+    class DyingState : public dae::IBombermanState
+    {
+    public:
+        void Enter(dae::GameObject& owner) override;
+        void Exit(dae::GameObject& owner) override;
+        void Update(dae::GameObject* owner, float deltaTime) override;
+        void HandleInput(dae::GameObject* owner) override;
+        void HandleEvent(dae::GameObject* owner) override;
+    };
+
 }
 

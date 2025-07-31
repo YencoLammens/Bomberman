@@ -158,7 +158,16 @@ void load()
 	auto fsm = std::make_unique<dae::FSMComponent<dae::BombermanState, dae::IBombermanState>>(go.get());
 
 	fsm->AddState(dae::BombermanState::IdleDown, std::make_unique<dae::IdleDownState>());
-	//fsm->AddState(dae::BombermanState::WalkRight, std::make_unique<dae::state>());
+	fsm->AddState(dae::BombermanState::IdleUp, std::make_unique<dae::IdleUpState>());
+	fsm->AddState(dae::BombermanState::IdleRight, std::make_unique<dae::IdleRightState>());
+	fsm->AddState(dae::BombermanState::IdleLeft, std::make_unique<dae::IdleLeftState>());
+
+	fsm->AddState(dae::BombermanState::WalkUp, std::make_unique<dae::WalkingUpState>());
+	fsm->AddState(dae::BombermanState::WalkDown, std::make_unique<dae::WalkingDownState>());
+	fsm->AddState(dae::BombermanState::WalkRight, std::make_unique<dae::WalkingRightState>());
+	fsm->AddState(dae::BombermanState::WalkLeft, std::make_unique<dae::WalkingLeftState>());
+	
+	fsm->AddState(dae::BombermanState::Dying, std::make_unique<dae::DyingState>());
 
 	fsm->ChangeState(dae::BombermanState::IdleDown);
 

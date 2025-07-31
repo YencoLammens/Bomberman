@@ -60,6 +60,6 @@ namespace dae
     private:
         std::unordered_map<StateId, std::unique_ptr<State>> m_statesMap;
         State* m_currentState;
-        StateId m_currentStateId;
+        StateId m_currentStateId{};
     };
 }
