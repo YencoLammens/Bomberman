@@ -106,6 +106,7 @@
     <ClCompile Include="SpriteAnimatorComponent.cpp" />
     <ClCompile Include="TextComponent.cpp" />
     <ClCompile Include="TileMap.cpp" />
+    <ClCompile Include="TimerDisplay.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnimationClip.h" />
@@ -130,6 +131,7 @@
     <ClInclude Include="SpriteAnimatorComponent.h" />
     <ClInclude Include="TextComponent.h" />
     <ClInclude Include="TileMap.h" />
+    <ClInclude Include="TimerDisplay.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

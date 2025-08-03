@@ -84,7 +84,7 @@ void dae::MoveComponent::SetDirection(const glm::vec3& direction)
 		auto* fsm = GetOwner()->GetComponent<FSMComponent<BombermanState, IBombermanState>>();
 		if (!fsm) return;
 
-		if (direction.x < 0.f)
+		if (direction.x < 0.f )
 			fsm->ChangeState(BombermanState::WalkLeft);
 		else if (direction.x > 0.f)
 			fsm->ChangeState(BombermanState::WalkRight);

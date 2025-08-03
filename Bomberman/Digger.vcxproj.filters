@@ -78,6 +78,9 @@
     <ClCompile Include="IBombermanState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="TimerDisplay.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HealthComponent.h">
@@ -144,6 +147,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BombermanState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TimerDisplay.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

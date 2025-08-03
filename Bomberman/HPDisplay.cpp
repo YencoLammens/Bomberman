@@ -14,7 +14,7 @@ void dae::HPDisplay::Update(float /*deltaTime*/)
 {
 	const glm::vec3 cameraPos = dae::Camera::GetInstance().GetPosition();
 
-	glm::vec3 uiOffset{ cameraPos.x + 500.f, cameraPos.y + 20.f, 0.f };
+	glm::vec3 uiOffset{ cameraPos.x + 700, cameraPos.y + 20.f, 0.f };
 
 	GetOwner()->GetTransform()->SetLocalPosition(uiOffset);
 }

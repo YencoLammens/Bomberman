@@ -51,6 +51,7 @@ void dae::HealthComponent::Death()
 	LoseHeart();
 	GetOwner()->GetComponent<MoveComponent>()->DisableMovement();
 	GetOwner()->GetComponent<FireballLauncherComponent>()->SetCanFire(false);
+	//GetOwner()->GetComponent<FSMComponent<BombermanState, IBombermanState>>()->ChangeState(BombermanState::Dead);
 	ServiceLocator::get_SoundSystem().Play(0, 0.2f);
 	ServiceLocator::get_SoundSystem().Play(1, 0.2f);
 	

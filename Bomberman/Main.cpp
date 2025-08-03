@@ -49,6 +49,7 @@
 #include "IBombermanState.h"
 #include "FSMComponent.h"
 #include "BombermanState.h"
+#include "TimerDisplay.h"
 
 void load()
 {
@@ -284,6 +285,15 @@ void load()
 	go->AddObserver(scoreGo->GetComponent<dae::ScoreDisplay>());
 	scene.Add(std::move(scoreGo));
 	
+
+	auto timerGo = std::make_unique<dae::GameObject>();
+	auto timerText = std::make_unique<dae::TextComponent>(timerGo.get(), "TIME: 180", font.get());
+	timerGo->AddComponent(std::move(timerText));
+
+	auto timerDisplay = std::make_unique<dae::TimerDisplay>(timerGo.get(), 180);
+	timerGo->AddComponent(std::move(timerDisplay));
+
+	scene.Add(std::move(timerGo));
 
 
 

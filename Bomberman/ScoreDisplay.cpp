@@ -16,7 +16,7 @@ void dae::ScoreDisplay::Update(float /*deltaTime*/)
 	const glm::vec3 cameraPos = dae::Camera::GetInstance().GetPosition();
 
 	// For example, anchor top-left at 20,20 screen-space units from the camera view
-	glm::vec3 uiOffset{ cameraPos.x + 20.f, cameraPos.y + 20.f, 0.f };
+	glm::vec3 uiOffset{ cameraPos.x + 500, cameraPos.y + 20.f, 0.f };
 
 	GetOwner()->GetTransform()->SetLocalPosition(uiOffset);
 }
